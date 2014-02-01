@@ -15,10 +15,10 @@ body {
   height: 96px;
 }
 .pane {
-  background-image: url('../img/splash.png');
-  background-repeat: no-repeat;
-  background-size: contain;
-  background-position: center;
+  /*background-image: url('../img/splash.png');*/
+  /*background-repeat: no-repeat;*/
+  /*background-size: contain;*/
+  /*background-position: center;*/
 }
 
 .tile {

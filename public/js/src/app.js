@@ -5,8 +5,7 @@
 // the 2nd parameter is an array of 'requires'
 // 'fittr.services' is found in services.js
 // 'fittr.controllers' is found in controllers.js
-angular.module('fittr', ['ionic', 'ngRoute', 'LocalStorageModule', 'nvd3ChartDirectives',
-  'fittr.services', 'fittr.controllers'])
+angular.module('fittr', ['ionic', 'ngRoute', 'LocalStorageModule', 'nvd3ChartDirectives', 'fittr.services', 'fittr.controllers'])
 .config(function(UserServiceProvider) {
   // UserServiceProvider.setApiKey('myKey');
 })
@@ -80,49 +79,57 @@ angular.module('fittr', ['ionic', 'ngRoute', 'LocalStorageModule', 'nvd3ChartDir
   /*
    * Fittr
    */
-  $stateProvider
 
-    .state('entry', {
+  $stateProvider.
+
+    // ENTRY 
+    state('entry', {
       url: '/',
       templateUrl: 'templates/entry.html'
-    })
+    }).
 
-    .state('signup', {
+    state('signup', {
       url: '/signup',
       templateUrl: 'templates/signup-login.html',
       controller: 'SignupController'
-    })
+    }).
 
-    .state('login', {
+    state('login', {
       url: '/login',
       templateUrl: 'templates/signup-login.html',
       controller: 'LoginController'
-    })
+    }).
 
-    // User will connect their devices/services here
-    .state('connect-devices', {
+    // CONNECT DEVICES
+    state('connect-devices', {
       url: '/connect-devices',
       templateUrl: 'templates/connect-devices.html',
-      controller: 'ConnectDevicesController',
-      resolve: {
-        loggedin: checkLoggedIn
-      }
-    })
+      controller: 'ConnectDevicesController'
+      // resolve: {
+      //   loggedin: checkLoggedIn
+      // }
+    }).
 
     // MAIN
-    .state('main', {
+    state('main', {
       url: '/main',
       abstract: true,
-      templateUrl: 'templates/main.html',
+      templateUrl: 'templates/loggy.html',
+      // place this an any route you need to protect and no unauth user will get to it
       resolve: {
-        loggedin: checkConnectedDev // place this an any route you need
-          //to protect and no unauth user will get to it
+        loggedin: checkConnectedDev 
       }
-    })
-    .state('main.stream', {
+    }).
+    state('main.stream', {
+      // parent: 'main',
       url: '/stream',
       // nested views for /main/stream
       views: {
+        // load the below template into nav-view with 
+        // the name `main`
+        'main@': { 
+          templateUrl: 'templates/main.html'
+        },
         'topBar@': {
           templateUrl: 'templates/topBar.html',
           controller: 'TopBarController'
@@ -133,9 +140,6 @@ angular.module('fittr', ['ionic', 'ngRoute', 'LocalStorageModule', 'nvd3ChartDir
         }
       }
     });
-
-  
-    
 
   // if none of the above states are matched, use this as the fallback
   $urlRouterProvider.otherwise('/');
